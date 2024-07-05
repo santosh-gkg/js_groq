@@ -23,8 +23,8 @@ const Main = () => {
             <div className="main-container">
                 <div className="result">
                     {currentChatMessages.map((message, index) => (
-                        <div key={index} className={`message ${message.sender}`}>
-                            <p>{message.text}</p>
+                        <div key={index} className={message.sender === 'user' ? 'result-title' : 'result-data'} dangerouslySetInnerHTML={{__html:message.text}}>
+                            
                         </div>
                     ))}
                 </div>
