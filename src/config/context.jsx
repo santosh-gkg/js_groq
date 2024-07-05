@@ -1,73 +1,47 @@
-import { createContext, useState} from "react";
+import { createContext, useState, useEffect } from "react";
 import runChat from "./groq";
 
-export const Context= createContext();
+export const Context = createContext();
 
 const ContextProvider = (props) => {
+    const [input, setInput] = useState('');
+    const [currentChat, setCurrentChat] = useState(null);
+    const [chats, setChats] = useState([]);
 
-    const[input,setInput]=useState('');
-    const[recentPrompt,setRecentPrompt]=useState('');
-    const[prevPrompts,setPrevPrompts]=useState([]);
-    const[showResult,setShowResult]=useState(false);
-    const[loading,setLoading]=useState(false);
-    const[resultData,setResultData]=useState('');
-    
+    useEffect(() => {
+        const storedChats = JSON.parse(localStorage.getItem('chats')) || [];
+        setChats(storedChats);
+    }, []);
 
-    const delayPara=(index,nextWord)=>{
-        setTimeout(function(){
-            setResultData(prev=>prev+nextWord);
-        },index*10
-    )
-    }
+    useEffect(() => {
+        localStorage.setItem('chats', JSON.stringify(chats));
+    }, [chats]);
 
-    const newChat=()=>{
-        setLoading(false)
-        setShowResult(false)
-    }
+    const startNewChat = () => {
+        const newChat = { id: Date.now(), messages: [] };
+        setChats([newChat, ...chats]);
+        setCurrentChat(newChat.id);
+    };
 
-    const onSent = async(prompt)=>{
-        setResultData('')
-        setLoading(true)
-        setShowResult(true)
-        let response;
-        if(prompt!== undefined){
-            response= await runChat(prompt);
-            setRecentPrompt(prompt); 
-        }
-        else{
-            setPrevPrompts(prev=>[...prev,input])
-            setRecentPrompt(input)
-            response= await runChat(input)
-        }
-        let newResponse=response.split(' ')
-        for (let i=0;i<newResponse.length;i++){
-            delayPara(i,newResponse[i]+' ')
-        }
-        setLoading(false)
-        setInput('')
-    }
+    const sendMessage = async (message) => {
+        const response = await runChat(message);
+        setChats(prevChats =>
+            prevChats.map(chat =>
+                chat.id === currentChat ? { ...chat, messages: [...chat.messages, { sender: 'user', text: message }, { sender: 'bot', text: response }] } : chat
+            )
+        );
+        setInput('');
+    };
 
-    
-    const contextValue = {
-        prevPrompts,
-        setPrevPrompts,
-        onSent,
-        setRecentPrompt,
-        recentPrompt,
-        showResult,
-        loading,
-        resultData,
-        input,
-        setInput,
-        newChat
-
-    }
+    const loadChat = (chatId) => {
+        setCurrentChat(chatId);
+    };
 
     return (
-        <Context.Provider value={contextValue}>
+        <Context.Provider value={{ input, setInput, currentChat, chats, startNewChat, sendMessage, loadChat }}>
             {props.children}
         </Context.Provider>
-    )
-}
+    );
+};
 
 export default ContextProvider;
