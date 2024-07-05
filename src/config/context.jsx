@@ -40,8 +40,9 @@ const ContextProvider = (props) => {
             )
         );
         setInput('');
-        const response = await runChat(message);
-        console.log(response);
+        
+        const currentChatMessages = chats.find(chat => chat.id === currentChat)?.messages || [];
+        const response = await runChat(currentChatMessages,message);
         let responsearray = response.split('\n\n');
         let newarray="";
         for (let i=0; i<responsearray.length; i++){
