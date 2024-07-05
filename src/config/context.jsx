@@ -22,15 +22,29 @@ const ContextProvider = (props) => {
         setChats([newChat, ...chats]);
         setCurrentChat(newChat.id);
     };
-
+    const saveChatsToLocalStorage = (updatedChats) => {
+        localStorage.setItem('chats', JSON.stringify(updatedChats));
+        setChats(updatedChats);
+    };
+    const deleteChat = (chatId) => {
+        const updatedChats = chats.filter(chat => chat.id !== chatId);
+        console.log('coming here');
+        saveChatsToLocalStorage(updatedChats);
+    };
     const sendMessage = async (message) => {
-        const response = await runChat(message);
         setChats(prevChats =>
             prevChats.map(chat =>
-                chat.id === currentChat ? { ...chat, messages: [...chat.messages, { sender: 'user', text: message }, { sender: 'bot', text: response }] } : chat
+                chat.id === currentChat ? { ...chat, messages: [...chat.messages, { sender: 'user', text: message }] } : chat
             )
         );
         setInput('');
+        const response = await runChat(message);
+        setChats(prevChats =>
+            prevChats.map(chat =>
+                chat.id === currentChat ? { ...chat, messages: [...chat.messages, { sender: 'bot', text: response }] } : chat
+            )
+        );
+        
     };
 
     const loadChat = (chatId) => {
@@ -38,7 +52,7 @@ const ContextProvider = (props) => {
     };
 
     return (
-        <Context.Provider value={{ input, setInput, currentChat, chats, startNewChat, sendMessage, loadChat }}>
+        <Context.Provider value={{ input, setInput, currentChat, chats, startNewChat, sendMessage, loadChat,deleteChat}}>
             {props.children}
         </Context.Provider>
     );

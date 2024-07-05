@@ -5,8 +5,12 @@ import { Context } from '../../config/context';
 
 const Sidebar = () => {
     const [extended, setExtended] = useState(false);
-    const { chats, startNewChat, loadChat } = useContext(Context);
-
+    const { chats, startNewChat, loadChat, deleteChat} = useContext(Context);
+    const handleDelete = (chatId) => {
+        if (window.confirm('Are you sure you want to delete this chat?')) {
+            deleteChat(chatId);
+        }
+    };
     return (
         <div className="sidebar">
             <div className="top">
@@ -20,8 +24,13 @@ const Sidebar = () => {
                         <p className="recent-title">Chats</p>
                         {chats.map(chat => (
                             <div key={chat.id} onClick={() => loadChat(chat.id)} className="recent-entry">
+
                                 <img src={assets.message_icon} alt="" />
-                                <p>Chat {chat.id}</p>
+                                {(!chat.messages.length) ? <p>New Chat</p> : <p>{chat.messages[0].text.slice(0,18)+'...'}</p>
+
+                                }
+                                
+                                <img onClick={() => handleDelete(chat.id)} src={assets.delete_icon} alt="delete" />
                             </div>
                         ))}
                     </div>

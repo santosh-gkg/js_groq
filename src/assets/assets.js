@@ -18,6 +18,7 @@ import krishna_icon from './krishna_icon.png'
 import glowing_bulb_icon from './glowing_bulb_icon.png'
 import question_mark_icon from './question_mark_icon.png'
 import brain_icon from './brain_icon.png'
+import delete_icon from './delete.png'
 
 export const assets = {
     history_icon,
@@ -39,5 +40,6 @@ export const assets = {
     krishna_icon,
     glowing_bulb_icon,
     question_mark_icon,
-    brain_icon
+    brain_icon,
+    delete_icon
 }

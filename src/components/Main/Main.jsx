@@ -13,6 +13,8 @@ const Main = () => {
             sendMessage(input);
         }
     };
+    
+    
 
     const currentChatMessages = chats.find(chat => chat.id === currentChat)?.messages || [];
 
@@ -23,6 +25,7 @@ const Main = () => {
                 <img src={assets.bg_icon} alt="" />
             </div>
             <div className="main-container">
+                        
                 {!(currentChatMessages.length) ? 
                 <>
                 <div className="greet">
@@ -48,7 +51,8 @@ const Main = () => {
                 </div>
             </div>
             
-            </>:<div className="result">
+            </>:
+                <div className="result">
                     {currentChatMessages.map((message, index) => (
                         <div key={index} className={message.sender === 'user' ? 'result-title' : 'result-data'} dangerouslySetInnerHTML={{__html:message.text}}>
                             
