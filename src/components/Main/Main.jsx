@@ -5,7 +5,9 @@ import { Context } from '../../config/context';
 
 const Main = () => {
     const { input, setInput, currentChat, chats, sendMessage } = useContext(Context);
-
+    const handleCardClick = (text) => {
+        setInput(text);
+    };
     const handleKeyPress = (event) => {
         if (event.key === 'Enter') {
             sendMessage(input);
@@ -21,13 +23,41 @@ const Main = () => {
                 <img src={assets.bg_icon} alt="" />
             </div>
             <div className="main-container">
-                <div className="result">
+                {!(currentChatMessages.length) ? 
+                <>
+                <div className="greet">
+                        <p className=""><span>Hare Krishna</span></p>
+                        <p>How can I server you today?</p>
+                    </div>
+                    <div className="cards">
+                        <div onClick={() => handleCardClick("What is soul?")} className="card">
+                            <p>What is soul?</p>
+                            <img src={assets.question_mark_icon} alt="" />
+                        </div>
+                        <div onClick={() => handleCardClick("what are the main teachings given by krishna to arjuna?")} className="card">
+                            <p>what are the main teachings given by krishna to arjuna?</p>
+                            <img src={assets.glowing_bulb_icon} alt="" />
+                        </div>
+                        <div onClick={() => handleCardClick("How to deal with my anger?")} className="card">
+                            <p>How to deal with my anger?</p>
+                            <img src={assets.brain_icon} alt="" />
+                        </div>
+                        <div onClick={() => handleCardClick("How to come out of depression?")} className="card">
+                            <p>How to come out of depression?</p>
+                            <img src={assets.bulb_icon} alt="" />
+                </div>
+            </div>
+            
+            </>:<div className="result">
                     {currentChatMessages.map((message, index) => (
                         <div key={index} className={message.sender === 'user' ? 'result-title' : 'result-data'} dangerouslySetInnerHTML={{__html:message.text}}>
                             
                         </div>
                     ))}
                 </div>
+
+                }
+                
                 <div className="main-bottom">
                     <div className="search-box">
                         <input
