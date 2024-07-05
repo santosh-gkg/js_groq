@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext,useEffect,useRef } from 'react';
 import './Main.css';
 import { assets } from '../../assets/assets';
 import { Context } from '../../config/context';
@@ -13,11 +13,15 @@ const Main = () => {
             sendMessage(input);
         }
     };
-    
-    
+    const resultRef = useRef(null);
 
     const currentChatMessages = chats.find(chat => chat.id === currentChat)?.messages || [];
-
+    useEffect(() => {
+        if (resultRef.current) {
+            resultRef.current.scrollTop = resultRef.current.scrollHeight;
+        }
+    }, [currentChatMessages]);
+    
     return (
         <div className='main'>
             <div className="nav">
@@ -52,9 +56,10 @@ const Main = () => {
             </div>
             
             </>:
-                <div className="result">
+                <div ref={resultRef} className="result">
                     {currentChatMessages.map((message, index) => (
-                        <div key={index} className={message.sender === 'user' ? 'result-title' : 'result-data'} dangerouslySetInnerHTML={{__html:message.text}}>
+                        <div key={index} className={message.role === 'user' ? 'result-title' : 'result-data'}  dangerouslySetInnerHTML={{__html:message.content}}>
+                            
                             
                         </div>
                     ))}

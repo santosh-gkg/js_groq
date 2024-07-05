@@ -3,6 +3,7 @@
     min-height: 100vh;
     padding-bottom: 15vh;
     position: relative;
+    background-color: #f0d2a3;
 }
 
 .main .nav{
@@ -22,20 +23,21 @@
 }
 
 .main-container{
-    max-width: 900px;
+    max-width: 80%;
     max-height: infinite;
     margin:auto;
 }
 
-.main .greet{
+.greet{
     margin: 20px 0px;
+    max-width: 80%;
     font-size: 45px;
     color: #c4c7c5;
     font-weight: 500;
     padding: 25px;
 }
 
-.main .greet span{
+.greet span{
     background: -webkit-linear-gradient(16deg, #4b90ff, #f2c707);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -82,7 +84,7 @@
     position: absolute;
     bottom: 0px;
     width: 100%;
-    max-width: 900px;
+    max-width: 80%;
     padding: 0px 20px;
     margin: auto;
 }
@@ -137,11 +139,21 @@
     display:none;
 }
 
+
 .result-title{
-    margin:40px 0px;
-    display:flex;
-    align-items: center;
+    margin:20px;   
+    margin-left: 40%;
+    margin-right: 0px; 
+    
+    /* align-items: right; */
+    text-align: right;
+    max-width: 60%;
+    color: #000000;
+    font-size: 18px;
     gap: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: rgb(230, 183, 131);
 }
 
 .result img{
@@ -151,9 +163,12 @@
 }
 
 .result-data{
-    display:flex;
     align-items: start;
     gap:20px;
+    font-size: 18px;
+    color: #000000;
+    white-space: pre-line;
+    max-width: 900px;
 }
 
 .loader{

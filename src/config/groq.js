@@ -1,28 +1,29 @@
+// groq.js
+
 // Define the base URL of your FastAPI server
 const baseUrl = "http://localhost:8000";
-import {Groq} from 'groq-sdk';
+import { Groq } from 'groq-sdk';
+
 // Function to send a query to the FastAPI server and get a response
-async function runChat(query) {
-
-    const key=import.meta.env.VITE_GROQ_API_KEY;
-    const groq = new Groq({ apiKey: key,dangerouslyAllowBrowser: true});
-
-    const chatCompletion=groq.chat.completions.create({
+async function runChat(messages) {
+    const key = import.meta.env.VITE_GROQ_API_KEY;
+    const groq = new Groq({ apiKey: key, dangerouslyAllowBrowser: true });
+    // console.log(messages)
+    const chatCompletion = await groq.chat.completions.create({
         messages: [
             {
                 role: "system",
-                content: "you are a helpful bot which generate content in html format. use div blocks to structure your content. don't use large font size, for heading use h3, subtitles in h2 and paragraph in p tag. you can also bold and italics",
-
+                content: "you are a helpful assistant.",
             },
-          {
-            role: "user",
-            content: query,
-          },
+            {
+                role: "user",
+                content: messages,
+            }
         ],
-        model: "llama3-70b-8192",
+        model: "llama3-8b-8192",
     });
 
-    return (await chatCompletion).choices[0].message.content;
-    // return data.response;
+    return chatCompletion.choices[0].message.content;
 }
+
 export default runChat;

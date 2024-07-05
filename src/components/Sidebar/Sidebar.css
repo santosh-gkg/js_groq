@@ -17,7 +17,7 @@
 }
 
 .sidebar .new-chat{
-    margin-top: 50px;
+    margin-top: 15px;
     display: inline-flex;
     align-items: center;
     gap: 10px;
@@ -30,26 +30,32 @@
 }
 
 .sidebar .recent{
-    margin-top: 10px;
+    margin-top: 0px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 0px;
+    overflow-y: scroll;
+    max-height: 60vh;
+}
+.recent::-webkit-scrollbar {
+    display:none;
 }
 
 .sidebar .recent-title{
-    margin-top: 30px;
-    margin-bottom: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .sidebar .recent-entry{
     display: flex;
     align-items: start;
-    gap: 10px;
+    gap: 5px;
     padding: 10px;
     padding-right: 40px;
     border-radius: 50px;
     color: #282828;
     cursor: pointer;
+    
 }
 
 .sidebar .recent-entry:hover{
