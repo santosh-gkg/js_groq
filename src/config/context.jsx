@@ -11,17 +11,35 @@ const ContextProvider = (props) => {
     useEffect(() => {
         const storedChats = JSON.parse(localStorage.getItem('chats')) || [];
         setChats(storedChats);
+        if (storedChats.length === 0){
+            startNewChat();
+        }
+        else{
+            setCurrentChat(storedChats[0].id);
+        }
     }, []);
-
+    
     useEffect(() => {
         localStorage.setItem('chats', JSON.stringify(chats));
     }, [chats]);
 
     const startNewChat = () => {
-        const newChat = { id: Date.now(), messages: [] };
+        let newid = chats.length === 0 ? 1 : chats[0].id + 1;
+        const newChat = { id: newid, messages: [] };
+        
+        // console.log(chats[1].id);
         setChats([newChat, ...chats]);
+        // console.log(chats[0].id);
         setCurrentChat(newChat.id);
     };
+    const start=() => {
+        
+    };
+    useEffect(() => {
+        start();
+    }, []); // Runs only once when the component mounts
+
+    
     
     const saveChatsToLocalStorage = (updatedChats) => {
         localStorage.setItem('chats', JSON.stringify(updatedChats));
