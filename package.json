@@ -2,7 +2,7 @@
   "name": "bg",
   "private": false,
   "version": "0.0.0",
-  "homepage": ".",
+  "homepage": "https://santosh-gkg.github.io/js_groq/",
   "type": "module",
   "scripts": {
     "dev": "vite",
