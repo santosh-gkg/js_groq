@@ -14,5 +14,6 @@ export default defineConfig({
       },
     },
     cors: false,
+    base: '/js_groq/',
   },
 })
