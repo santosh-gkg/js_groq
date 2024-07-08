@@ -34,7 +34,7 @@ const Main = () => {
                 <>
                 <div className="greet">
                         <p className=""><span>Hare Krishna</span></p>
-                        <p>How can I server you today?</p>
+                        <p>How can I serve you today?</p>
                     </div>
                     <div className="cards">
                         <div onClick={() => handleCardClick("What is soul?")} className="card">

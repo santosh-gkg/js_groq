@@ -32,15 +32,18 @@
     margin: 20px 0px;
     max-width: 80%;
     font-size: 45px;
-    color: #c4c7c5;
+    color: #151515;
     font-weight: 500;
     padding: 25px;
 }
 
-.greet span{
+/* .greet span{
     background: -webkit-linear-gradient(16deg, #4b90ff, #f2c707);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+} */
+.greet span{
+    color:rgb(188, 46, 7)
 }
 
 .main .cards{

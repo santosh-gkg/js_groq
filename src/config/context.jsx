@@ -61,17 +61,20 @@ const ContextProvider = (props) => {
         
         const currentChatMessages = chats.find(chat => chat.id === currentChat)?.messages || [];
         const response = await runChat(currentChatMessages,message);
-        let responsearray = response.split('\n\n');
-        let newarray="";
-        for (let i=0; i<responsearray.length; i++){
-            if (i===0 || i%2!==1){
-                newarray = newarray + responsearray[i];
-            }
-            else{
-                newarray = newarray +"<br><br>"+responsearray[i] +"<br><br>" ;
+        let newarray = "";
+        if (response) {
+            let responseArray = response.split('\n\n');
+            
+            for (let i = 0; i < responseArray.length; i++) {
+                if (i === 0 || i % 2 !== 1) {
+                    newarray += responseArray[i];
+                } else {
+                    newarray += "<br><br>" + responseArray[i] + "<br><br>";
+                }
             }
         }
-        let newarray1 = newarray.split('**');
+        let newarray1 = "";
+        newarray1=newarray.split('**');
         let newarray2="";
         for (let i=0; i<newarray1.length; i++){
             if (i===0 || i%2!==1){
